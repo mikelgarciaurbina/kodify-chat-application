@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-import { Button, TextField } from './components';
+import theme from './constants/theme';
+import { Dashboard } from './pages';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 const App = () => {
-  const [message, setMessage] = useState('');
-
   return (
-    <>
-      <div>Hola!</div>
-      <Button label="pepito" />
-      <TextField onChange={setMessage} value={message} />
-    </>
+    <ThemeProvider theme={theme}>
+      <Dashboard />
+      <GlobalStyle />
+    </ThemeProvider>
   );
 };
 

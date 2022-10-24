@@ -1,4 +1,5 @@
 const THEME = {
+  base_spacing: 8,
   palette: {
     common: {
       black: '#000',
