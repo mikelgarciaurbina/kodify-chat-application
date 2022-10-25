@@ -1,48 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
+import React from 'react';
 
-import { SocketProvider } from '../../providers';
 import { Button, ChatBubble, TextField } from '../../components';
+import { useDashboard } from './useDashboard';
+import { ChatMessageProps } from './Dashboard.types';
 import { ChatContainer, Container, Footer, Wrapper } from './Dashboard.styles';
 
-interface ChatMessageProps {
-  id: string;
-  label: string;
-  user: string;
-}
-
-const userId = nanoid(6);
-
 export const Dashboard = () => {
-  const [chat, setChat] = useState<ChatMessageProps[]>([]);
-  const [message, setMessage] = useState<string>('');
-
-  useEffect(() => {
-    SocketProvider.connect(userId);
-
-    SocketProvider.listen('chat_message', (message: ChatMessageProps) => {
-      setChat((prevState) => [...prevState, message]);
-    });
-
-    return () => {
-      SocketProvider.disconnect();
-    };
-  }, []);
-
-  const onSendMessage = () => {
-    SocketProvider.emit('chat_message', {
-      id: nanoid(8),
-      label: message,
-      user: userId,
-    });
-    setMessage('');
-  };
+  const { chat, message, onSendMessage, setMessage, userId } = useDashboard();
 
   return (
     <Wrapper>
       <Container>
         <ChatContainer>
-          {chat.map(({ id, label, user }) => (
+          {chat.map(({ id, label, user }: ChatMessageProps) => (
             <ChatBubble key={id} label={label} mine={user === userId} />
           ))}
         </ChatContainer>
