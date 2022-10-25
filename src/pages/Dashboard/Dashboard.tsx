@@ -1,60 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
 
-import { Button, TextField } from '../../components';
-import ChatBubble from '../../components/ChatBubble';
+import { SocketProvider } from '../../providers';
+import { Button, ChatBubble, TextField } from '../../components';
 import { ChatContainer, Container, Footer, Wrapper } from './Dashboard.styles';
 
-const CHAT = [
-  {
-    id: 1,
-    label: 'Test 1',
-    mine: true,
-  },
-  {
-    id: 2,
-    label: 'Test 2',
-    mine: false,
-  },
-  {
-    id: 3,
-    label: 'Test 3',
-    mine: false,
-  },
-  {
-    id: 4,
-    label: 'Test 4',
-    mine: true,
-  },
-  {
-    id: 5,
-    label: 'Test 5',
-    mine: true,
-  },
-  {
-    id: 6,
-    label: 'Test 6',
-    mine: false,
-  },
-];
+interface ChatMessageProps {
+  id: string;
+  label: string;
+  user: string;
+}
+
+const userId = nanoid(6);
 
 export const Dashboard = () => {
-  const [message, setMessage] = useState('');
+  const [chat, setChat] = useState<ChatMessageProps[]>([]);
+  const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    SocketProvider.connect(userId);
+
+    SocketProvider.listen('chat_message', (message: ChatMessageProps) => {
+      setChat((prevState) => [...prevState, message]);
+    });
+
+    return () => {
+      SocketProvider.disconnect();
+    };
+  }, []);
+
+  const onSendMessage = () => {
+    SocketProvider.emit('chat_message', {
+      id: nanoid(8),
+      label: message,
+      user: userId,
+    });
+    setMessage('');
+  };
 
   return (
     <Wrapper>
       <Container>
         <ChatContainer>
-          {CHAT.map((message) => (
-            <ChatBubble
-              key={message.id}
-              label={message.label}
-              mine={message.mine}
-            />
+          {chat.map(({ id, label, user }) => (
+            <ChatBubble key={id} label={label} mine={user === userId} />
           ))}
         </ChatContainer>
         <Footer>
           <TextField onChange={setMessage} value={message} />
-          <Button label="pepito" />
+          <Button label="pepito" onClick={onSendMessage} />
         </Footer>
       </Container>
     </Wrapper>
