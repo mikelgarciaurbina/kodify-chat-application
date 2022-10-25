@@ -18,7 +18,7 @@ export const Dashboard = () => {
         </ChatContainer>
         <Footer>
           <TextField onChange={setMessage} value={message} />
-          <Button label="pepito" onClick={onSendMessage} />
+          <Button label="Send" onClick={onSendMessage} />
         </Footer>
       </Container>
     </Wrapper>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '../../test-utils';
+
+import { act, fireEvent, render } from '../../test-utils';
 
 import { TextField } from './TextField';
 
@@ -16,9 +17,12 @@ describe('Compontent :: TextField', () => {
       <TextField onChange={spyOnChange} value="pepito" />
     );
 
-    fireEvent.change(getByRole('textbox'), {
-      target: { value: 'tests' },
+    act(() => {
+      fireEvent.change(getByRole('textbox'), {
+        target: { value: 'tests' },
+      });
     });
+
     expect(spyOnChange).toHaveBeenCalledTimes(1);
     expect(spyOnChange).toHaveBeenCalledWith('tests');
   });
