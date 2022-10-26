@@ -6,11 +6,12 @@ type ContainerProps = {
 };
 
 export const Container = styled.p<ContainerProps>`
-  border-radius: 25px;
-  line-height: 24px;
-  margin-bottom: 12px;
-  max-width: 255px;
-  padding: 10px 20px;
+  border-radius: ${({ theme }) => theme.base_spacing * 4}px;
+  line-height: ${({ theme }) => theme.base_spacing * 3}px;
+  margin-bottom: ${({ theme }) => theme.base_spacing * 1.5}px;
+  max-width: ${({ theme }) => theme.base_spacing * 30}px;
+  padding: ${({ theme }) =>
+    `${theme.base_spacing * 1.5}px ${theme.base_spacing * 2.5}px`};
   position: relative;
   word-wrap: break-word;
 
@@ -27,7 +28,7 @@ export const Container = styled.p<ContainerProps>`
       ? css`
           align-self: flex-end;
           background: ${({ theme }) => theme.palette.success.main};
-          color: ${({ theme, $think }) => $think ? theme.palette.grey[300] : theme.palette.common.white};
+          color: ${({ theme, $think }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
 
           &:before {
             right: -7px;
@@ -39,26 +40,26 @@ export const Container = styled.p<ContainerProps>`
           &:after {
             right: -26px;
             width: 26px;
-            background-color: ${({ theme }) => theme.palette.common.white};
+            background-color: ${({ theme }) => theme.palette.grey[300]};
             border-bottom-left-radius: 10px;
           }
         `
       : css`
-          background: ${({ theme }) => theme.palette.grey[300]};
-          color: ${({ theme, $think }) => $think ? theme.palette.grey[800] : theme.palette.common.black};
+          background: ${({ theme }) => theme.palette.grey[800]};
+          color: ${({ theme, $think }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
           align-self: flex-start;
 
           &:before {
             left: -7px;
             width: 20px;
-            background-color: ${({ theme }) => theme.palette.grey[300]};
+            background-color: ${({ theme }) => theme.palette.grey[800]};
             border-bottom-right-radius: 16px 14px;
           }
 
           &:after {
             left: -26px;
             width: 26px;
-            background-color: ${({ theme }) => theme.palette.common.white};
+            background-color: ${({ theme }) => theme.palette.grey[300]};
             border-bottom-right-radius: 10px;
           }
         `}

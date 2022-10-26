@@ -1,14 +1,17 @@
 import React from 'react';
 
+import { ButtonStyled } from './Button.styles';
+
 export interface ButtonProps {
+  disabled?: boolean;
   label: string;
   onClick?: () => void;
 }
 
-export const Button = ({ label, onClick }: ButtonProps) => {
+export const Button = ({ disabled, label, onClick }: ButtonProps) => {
   return (
-    <button type="button" onClick={onClick}>
+    <ButtonStyled disabled={disabled} type="button" onClick={onClick}>
       {label}
-    </button>
+    </ButtonStyled>
   );
 };

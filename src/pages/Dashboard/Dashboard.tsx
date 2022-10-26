@@ -17,8 +17,12 @@ export const Dashboard = () => {
           ))}
         </ChatContainer>
         <Footer>
-          <TextField onChange={setMessage} value={message} />
-          <Button label="Send" onClick={onSendMessage} />
+          <TextField
+            onChange={setMessage}
+            placeholder="Type a message"
+            value={message}
+          />
+          <Button disabled={!message} label="Send" onClick={onSendMessage} />
         </Footer>
       </Container>
     </Wrapper>

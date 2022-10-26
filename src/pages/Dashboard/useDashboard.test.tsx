@@ -1,5 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-
+import { act, renderHook } from '../../test-utils';
 import { SocketProvider } from '../../providers';
 import { useDashboard } from './useDashboard';
 

@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
+import BackgroundImage from '../../assets/background.jpg';
+
 export const Wrapper = styled.div`
-  background: red;
+  background: url(${BackgroundImage});
+  background-size: contain;
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -9,7 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.section`
-  background: green;
+  background: ${({ theme }) => theme.palette.grey[300]};
   display: flex;
   flex-direction: column;
   width: 600px;
@@ -19,11 +22,14 @@ export const ChatContainer = styled.article`
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: ${({ theme }) => theme.base_spacing * 2}px ${({ theme }) => theme.base_spacing * 2.5}px; 0;
+  padding: ${({ theme }) =>
+    `${theme.base_spacing * 2}px ${theme.base_spacing * 4}px`};
 `;
 
 export const Footer = styled.footer`
-  background: blue;
+  background: ${({ theme }) => theme.palette.primary.light};
   display: flex;
-  padding: ${({ theme }) => theme.base_spacing * 1}px;
+  gap: ${({ theme }) => theme.base_spacing * 2}px;
+  padding: ${({ theme }) =>
+    `${theme.base_spacing * 1}px ${theme.base_spacing * 2}px`};
 `;
