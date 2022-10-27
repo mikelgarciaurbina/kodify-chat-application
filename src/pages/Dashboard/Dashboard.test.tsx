@@ -95,4 +95,23 @@ describe('Pages :: Dashboard', () => {
 
     expect(spyOnSendMessage).toHaveBeenCalledTimes(0);
   });
+  it('should not print the header if not have nickname', () => {
+    const { queryAllByRole } = renderComponent();
+
+    expect(queryAllByRole('banner').length).toBe(0);
+  });
+  it('should print the nickname in the header', () => {
+    (useDashboard as jest.Mock).mockReturnValueOnce({
+      chat: [],
+      message: 'tests',
+      onSendMessage: spyOnSendMessage,
+      setMessage: jest.fn(),
+      nickname: 'Pepito',
+      userId: 'U1',
+    });
+    const { getByRole, getByText } = renderComponent();
+
+    expect(getByRole('banner')).toBeInTheDocument();
+    expect(getByText('Pepito')).toBeInTheDocument();
+  });
 });

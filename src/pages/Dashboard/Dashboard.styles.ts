@@ -33,3 +33,13 @@ export const Footer = styled.footer`
   padding: ${({ theme }) =>
     `${theme.base_spacing * 1}px ${theme.base_spacing * 2}px`};
 `;
+
+export const Header = styled.header`
+  background: ${({ theme }) => theme.palette.primary.light};
+  color: ${({ theme }) => theme.palette.common.white};
+  display: flex;
+  font-size: ${({ theme }) => theme.base_spacing * 2.5}px;
+  font-weight: bold;
+  padding: ${({ theme }) =>
+    `${theme.base_spacing * 1}px ${theme.base_spacing * 2}px`};
+`;
