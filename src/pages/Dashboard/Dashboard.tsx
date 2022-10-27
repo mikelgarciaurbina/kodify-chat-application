@@ -12,8 +12,8 @@ export const Dashboard = () => {
     <Wrapper>
       <Container>
         <ChatContainer>
-          {chat.map(({ id, label, user }: ChatMessageProps) => (
-            <ChatBubble key={id} label={label} mine={user === userId} />
+          {chat.map(({ id, label, think, user }: ChatMessageProps) => (
+            <ChatBubble key={id} label={label} mine={user === userId} think={think} />
           ))}
         </ChatContainer>
         <Footer>

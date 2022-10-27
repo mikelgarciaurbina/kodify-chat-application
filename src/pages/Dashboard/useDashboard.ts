@@ -3,10 +3,12 @@ import { nanoid } from 'nanoid';
 
 import { SocketProvider } from '../../providers';
 import { ChatMessageProps } from './Dashboard.types';
+import { messageParser } from './utils';
 
 const userId = nanoid(6);
 
 export const useDashboard = () => {
+  const [nickname, setNickname] = useState<string>('');
   const [chat, setChat] = useState<ChatMessageProps[]>([]);
   const [message, setMessage] = useState<string>('');
 
@@ -14,7 +16,12 @@ export const useDashboard = () => {
     SocketProvider.connect(userId);
 
     SocketProvider.listen('chat_message', (message: ChatMessageProps) => {
-      setChat((prevState) => [...prevState, message]);
+      if (message.label.startsWith('/nick')) {
+        if (message.user !== userId)
+          setNickname(message.label.replace('/nick ', ''));
+        return;
+      }
+      setChat((prevState) => messageParser(prevState, message));
     });
 
     return () => {
@@ -36,6 +43,7 @@ export const useDashboard = () => {
   return {
     chat,
     message,
+    nickname,
     onSendMessage,
     setMessage,
     userId,
