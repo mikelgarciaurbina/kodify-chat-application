@@ -23,6 +23,8 @@ export const useDashboard = () => {
   }, []);
 
   const onSendMessage = () => {
+    if (!message) return;
+
     SocketProvider.emit('chat_message', {
       id: nanoid(8),
       label: message,

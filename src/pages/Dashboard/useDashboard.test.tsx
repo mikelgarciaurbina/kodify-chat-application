@@ -65,4 +65,13 @@ describe('Pages :: Dashboard :: useDashboard', () => {
       user: 'UID0001',
     });
   });
+  it('should not call to emit on call to onSendMessage function without message', async () => {
+    const { result } = renderHook(() => useDashboard());
+
+    act(() => {
+      result.current.onSendMessage();
+    });
+
+    expect(SocketProvider.emit).toHaveBeenCalledTimes(0);
+  });
 });

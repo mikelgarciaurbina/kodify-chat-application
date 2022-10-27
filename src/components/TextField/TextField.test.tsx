@@ -26,4 +26,24 @@ describe('Compontent :: TextField', () => {
     expect(spyOnChange).toHaveBeenCalledTimes(1);
     expect(spyOnChange).toHaveBeenCalledWith('tests');
   });
+  it('should call to onPressEnter on press enter in the TextField', () => {
+    const spyOnPressEnter = jest.fn();
+    const { getByRole } = render(
+      <TextField
+        onChange={jest.fn()}
+        onPressEnter={spyOnPressEnter}
+        value="pepito"
+      />
+    );
+
+    act(() => {
+      fireEvent.keyPress(getByRole('textbox'), {
+        key: 'Enter',
+        code: 13,
+        charCode: 13,
+      });
+    });
+
+    expect(spyOnPressEnter).toHaveBeenCalledTimes(1);
+  });
 });

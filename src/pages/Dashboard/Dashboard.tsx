@@ -19,6 +19,7 @@ export const Dashboard = () => {
         <Footer>
           <TextField
             onChange={setMessage}
+            onPressEnter={onSendMessage}
             placeholder="Type a message"
             value={message}
           />

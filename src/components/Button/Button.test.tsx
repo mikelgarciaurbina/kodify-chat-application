@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '../../test-utils';
+import { act, fireEvent, render } from '../../test-utils';
 
 import { Button } from './Button';
 
@@ -12,7 +12,22 @@ describe('Compontent :: Button', () => {
     const spyOnClick = jest.fn();
     const { getByText } = render(<Button label="test" onClick={spyOnClick} />);
 
-    fireEvent.click(getByText('test'));
+    act(() => {
+      fireEvent.click(getByText('test'));
+    });
+
     expect(spyOnClick).toHaveBeenCalledTimes(1);
+  });
+  it('should not call to onClick on click the disabled button', () => {
+    const spyOnClick = jest.fn();
+    const { getByText } = render(
+      <Button disabled label="test" onClick={spyOnClick} />
+    );
+
+    act(() => {
+      fireEvent.click(getByText('test'));
+    });
+
+    expect(spyOnClick).toHaveBeenCalledTimes(0);
   });
 });

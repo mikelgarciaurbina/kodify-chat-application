@@ -23,12 +23,12 @@ export const Container = styled.p<ContainerProps>`
     position: absolute;
   }
 
-  ${({ $mine }) =>
+  ${({ $mine, $think }) =>
     $mine
       ? css`
           align-self: flex-end;
           background: ${({ theme }) => theme.palette.success.main};
-          color: ${({ theme, $think }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
+          color: ${({ theme }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
 
           &:before {
             right: -7px;
@@ -46,7 +46,7 @@ export const Container = styled.p<ContainerProps>`
         `
       : css`
           background: ${({ theme }) => theme.palette.grey[800]};
-          color: ${({ theme, $think }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
+          color: ${({ theme }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
           align-self: flex-start;
 
           &:before {

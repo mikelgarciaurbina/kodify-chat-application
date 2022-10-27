@@ -2,11 +2,13 @@ import React from 'react';
 
 import { act, fireEvent, render } from '../../test-utils';
 
+import { useDashboard } from './useDashboard';
 import { Dashboard } from './Dashboard';
 
 const spyOnSendMessage = jest.fn();
 const spySetMessage = jest.fn();
 
+jest.mock('../../assets/background.jpg', () => 'fake/url');
 jest.mock('./useDashboard', () => ({
   useDashboard: jest.fn(() => ({
     chat: [
@@ -68,7 +70,14 @@ describe('Pages :: Dashboard', () => {
     const { getByText } = renderComponent();
     expect(getByText('Send')).toBeInTheDocument();
   });
-  it('should call to onSendMessage on click in the send button', () => {
+  it('should call to onSendMessage on click in the send button', async () => {
+    (useDashboard as jest.Mock).mockReturnValueOnce({
+      chat: [],
+      message: 'tests',
+      onSendMessage: spyOnSendMessage,
+      setMessage: jest.fn(),
+      userId: 'U1',
+    });
     const { getByText } = renderComponent();
 
     act(() => {
@@ -76,5 +85,14 @@ describe('Pages :: Dashboard', () => {
     });
 
     expect(spyOnSendMessage).toHaveBeenCalledTimes(1);
+  });
+  it('should not call to onSendMessage on click in the send button without message', () => {
+    const { getByText } = renderComponent();
+
+    act(() => {
+      fireEvent.click(getByText('Send'));
+    });
+
+    expect(spyOnSendMessage).toHaveBeenCalledTimes(0);
   });
 });
