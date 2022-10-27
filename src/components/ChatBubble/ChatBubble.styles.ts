@@ -46,7 +46,7 @@ export const Container = styled.p<ContainerProps>`
         `
       : css`
           background: ${({ theme }) => theme.palette.grey[800]};
-          color: ${({ theme }) => $think ? theme.palette.grey[800] : theme.palette.common.white};
+          color: ${({ theme }) => $think ? theme.palette.grey[300] : theme.palette.common.white};
           align-self: flex-start;
 
           &:before {
